@@ -7,17 +7,14 @@ class LightCount {
 private:
 
   int index;    // index of led
-  
-  int counter = 0;
 
-  const int LT_MIN = 10;   // Min of lighting time
-  const int LT_MAX = 30;   // Max of lighting time
+  float lightingStep;
+  float waitingStep;
 
-  const int WT_MIN = 100; // Min of waiting time
-  const int WT_MAX = 250; // Max of waiting time
+  const int minSteps = 10;   // Min fade Duration 
+  const int maxSteps = 100;   // Max fade Duration
 
-  int lightingTime;
-  int waitingTime;
+
 
   void setTime();
 
@@ -30,6 +27,11 @@ public:
 
   /*———————— Update ————————*/
   bool update();
+
+  int hue = 70;
+  float currOnStep = 0;
+  float currOffStep = 0;
+
 
 };
 

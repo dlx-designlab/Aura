@@ -1,5 +1,7 @@
 #include "Arduino.h"
 #include "LightCount.h"
+#include "FastLED.h"
+
 
 /*———————————————— Constructer ————————————————*/
 LightCount::LightCount() {}
@@ -16,28 +18,35 @@ void LightCount::setup(int _index) {
 
 /*———————————————— Update ————————————————*/
 bool LightCount::update() {
-  bool result = false;
-  if (counter < lightingTime) {
-    result = true;    // turn on 
-  } else  {
-    result = false;   // turn off
-  }
 
-  counter++;
-  if (counter > waitingTime) {  // finish waiting 
-    counter = 0;
+
+  // for (int j = 1; j < 180; j++){
+  //     int ledBrighness = sin8(j);
+  //     for (int i = 0; i<LED_NUM; i++)
+  //       leds[i] = CHSV(0, 255, ledBrighness);
+  //     FastLED.show(); 
+  //     delay(50);
+  //   }
+    //leds[i] = CRGB::Black; 
+    //FastLED.show(); 
+
+  if (currOnStep < 180) {
+    currOnStep += lightingStep;
+  } else if (currOffStep < 180) {
+    currOffStep += waitingStep;
+  } else
     setTime();
-  }
 
-  return result;
 }
-
 
 
 /*———————————————— set lighting time randomly ————————————————*/
 void LightCount::setTime() {
-  lightingTime = random(LT_MIN, LT_MAX);
-  waitingTime = random(WT_MIN, WT_MAX);
+  currOnStep = 0;
+  currOffStep = 0;
+
+  lightingStep = 180 / random(minSteps, maxSteps);
+  waitingStep = 180 / random(minSteps, maxSteps);
 }
 
 
