@@ -32,7 +32,6 @@ public:
   float currOnStep = 0;
   float currOffStep = 0;
 
-
 };
 
 #endif
